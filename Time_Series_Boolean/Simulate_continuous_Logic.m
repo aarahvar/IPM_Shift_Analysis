@@ -1,17 +1,17 @@
 
-timespan = 0:5:400;
+timespan = 0:5:500;
 shift_1 = 2 ;
-shift_2 = 7 ;
+shift_2 = 1;
 
 
 N_t = length(timespan);
 
-TF(1).TF = sin(2*pi*timespan/(55)+(2*pi*.0*(rand(1,N_t)-.5)));
-TF(2).TF = sin(2*pi*(timespan+randperm(59,1))/(60)+(2*pi*.0*(rand(1,N_t)-.5)));
+TF(1).TF = sin(2*pi*timespan/(55)+(2*pi*.15*(rand(1,N_t)-.5)));
+TF(2).TF = sin(2*pi*(timespan+randperm(59,1))/(60)+(2*pi*.15*(rand(1,N_t)-.5)));
 
-Noise_Level = 0;.7 ; 
+Noise_Level = .7 ; 
 
-Logic_Output = [0 1 0 1];
+Logic_Output = [1 0 0 0];
 
 n= 4   ;
 k=.5;
@@ -59,8 +59,6 @@ linkaxes(ax,'x');
 % [TF_d2,~] = discretize_thr(TF(2).TF,windowSize,Range_divider_thr);
 % [T_d,~] = discretize_thr(T,windowSize,Range_divider_thr);
 
-
-% plot((TF1_b & TF2_b)*2-1,'g')
 
 clc
 %00

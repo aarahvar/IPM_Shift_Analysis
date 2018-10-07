@@ -1,17 +1,32 @@
-function [Detection_Count_in_State,Detection_Probability_in_State] = Detect_Logic_in_TimeSeries(TF_b,T_b,shift,Logic_Output,Display_Detection_Flag)
+function [Detection_Count_in_State,Detection_Probability_in_State] = Detect_Logic_in_TimeSeries(TF_b,T_b,shift_1,shift_2,Logic_Output,Display_Detection_Flag)
+
+[~,Max_Indx] = max([shift_1 shift_2]);
+Diff_shift = abs(shift_1-shift_2);
+if Max_Indx ==1
+    TF_bb(1).TF_b = TF_b(1).TF_b(1:end-Diff_shift);
+    TF_bb(2).TF_b = TF_b(2).TF_b(1+Diff_shift:end);
+    Shift_Max = shift_1;
+elseif Max_Indx==2
+    TF_bb(1).TF_b = TF_b(1).TF_b(1+Diff_shift:end);
+    TF_bb(2).TF_b = TF_b(2).TF_b(1:end-Diff_shift);
+    Shift_Max = shift_2;
+end
+
 
 N = length(T_b);
-Num_TF = length(TF_b);
+Num_TF = length(TF_bb);
 Num_State = 2^Num_TF;
 Detection_Probability_in_State = zeros(Num_State,2);
 Detection_Count_in_State = zeros(Num_State,2);
 
+
+
 clc
 % 00
-ind = find(~TF_b(1).TF_b & ~TF_b(2).TF_b);
-ind((shift+ind)> N)=[];
+ind = find(~TF_bb(1).TF_b & ~TF_bb(2).TF_b);
+ind((Shift_Max+ind)> N)=[];
 
-count00=hist(T_b(shift+ind'),[0 1]);
+count00=hist(T_b(Shift_Max+ind'),[0 1]);
 Detection_Probability_in_State(1,:) = count00/sum(count00);
 Detection_Count_in_State(1,:) = count00;
 
@@ -20,9 +35,9 @@ if Display_Detection_Flag
 end
 
 %% 01
-ind = find(~TF_b(1).TF_b & TF_b(2).TF_b);
-ind((shift+ind)> N)=[];
-count01=hist(T_b(shift+ind'),[0 1]);
+ind = find(~TF_bb(1).TF_b & TF_bb(2).TF_b);
+ind((Shift_Max+ind)> N)=[];
+count01=hist(T_b(Shift_Max+ind'),[0 1]);
 Detection_Probability_in_State(2,:) = count01/sum(count01);
 Detection_Count_in_State(2,:) = count01;
 
@@ -32,9 +47,9 @@ end
 
 
 %% 10
-ind = find(TF_b(1).TF_b & ~TF_b(2).TF_b);
-ind((shift+ind)> N)=[];
-count10=hist(T_b(shift+ind'),[0 1]);
+ind = find(TF_bb(1).TF_b & ~TF_bb(2).TF_b);
+ind((Shift_Max+ind)> N)=[];
+count10=hist(T_b(Shift_Max+ind'),[0 1]);
 Detection_Probability_in_State(3,:) = count10/sum(count10);
 Detection_Count_in_State(3,:) = count10;
 
@@ -44,9 +59,9 @@ end
 
 
 %11
-ind = find(TF_b(1).TF_b & TF_b(2).TF_b);
-ind((shift+ind)> N)=[];
-count11=hist(T_b(shift+ind'),[0 1]);
+ind = find(TF_bb(1).TF_b & TF_bb(2).TF_b);
+ind((Shift_Max+ind)> N)=[];
+count11=hist(T_b(Shift_Max+ind'),[0 1]);
 Detection_Probability_in_State(4,:) = count11/sum(count11);
 Detection_Count_in_State(4,:) = count11;
 
