@@ -38,7 +38,7 @@ if plot_ts_flag
     % plot(timespan(1:end-1),[T_real_ts(1:end-1)],'marker','.','markersize',10)
     diff_t = diff(timespan);
     diff_t = diff_t(1);
-    timespan_Tb = timespan(1):diff_t:(timespan(1)+length(y_out)-1)*diff_t;
+    timespan_Tb = timespan(1):diff_t:(timespan(1)+length(T_b)-1)*diff_t;
     
     plot(timespan_Tb,y_out,'marker','.','markersize',10)
     ylabel('T')

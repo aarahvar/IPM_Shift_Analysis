@@ -1,4 +1,4 @@
-function T_interp = Interpolate_Production_Term(Logic_Output,TF,plot_mesh_flag,Hill_fn_flag,normalized_hill_flag,n,k,shift_1,shift_2)
+function T_interp = Interpolate_Production_Term(Logic_Output,TF,plot_mesh_flag,Hill_fn_flag,normalized_hill_flag,n,shift_1,shift_2)
 %%
 % Create a set of grid points and corresponding sample values.
 Num_TF = length(TF);
