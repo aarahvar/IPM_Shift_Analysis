@@ -3,7 +3,7 @@ function [T_b,TF_d,TF_s,TF_b,y_out,timespan_Tb]= Convert_Binary2Analog(TF,Logic_
     Anti_Log,plot_ts_flag,Plot_Hill_Mesh_Flag,Use_Hill_Flag,normalized_hill_flag,n,k,tau,shift_1,shift_2,Noise_Level)
 
 
-[T_b,TF_d,TF_s,TF_b,timespan_Tb]=Find_Target_Slop(TF,windowSize,Range_divider_thr,Logic_Output,Use_Smoothed_Curve,...
+[T_b,TF_d,TF_s,TF_b,timespan_Tb]=Find_TF_Slop(TF,windowSize,Range_divider_thr,Logic_Output,Use_Smoothed_Curve,...
     Anti_Log,plot_ts_flag,timespan,shift_1,shift_2);
 T_d = 2*T_b-1;
 synthetic_term = Interpolate_Production_Term(Logic_Output,TF,Plot_Hill_Mesh_Flag,Use_Hill_Flag,normalized_hill_flag,n,k,shift_1,shift_2);
