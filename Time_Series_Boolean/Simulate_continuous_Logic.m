@@ -1,28 +1,15 @@
-
-timespan = 0:5:500;
-shift_1 = 2 ;
-shift_2 = 1;
-Noise_Level = .7 ;
-Logic_Output = [1 1 0 1];
-plot_ts_flag = 1;
-
-
-N_t = length(timespan);
-
-TF(1).TF = sin(2*pi*timespan/(55)+(2*pi*.15*(rand(1,N_t)-.5)));
-TF(2).TF = sin(2*pi*(timespan+randperm(59,1))/(60)+(2*pi*.15*(rand(1,N_t)-.5)));
-
-
-
-n= 4   ;
-tau = 5   ;
-
-
-windowSize = 2;
-Range_divider_thr = 10;
-Num_TF = length(TF);
-
-
+function [TF_b,T_b]= Simulate_continuous_Logic(timespan,shift_1,shift_2,Noise_Level_Target,Logic_Output,plot_ts_flag,n,tau,windowSize,Range_divider_thr)
+% timespan = 0:5:500;
+% shift_1 = 2 ;
+% shift_2 = 1;
+% Noise_Level_Target = .7 ;
+% Logic_Output = [1 1 0 1];
+% plot_ts_flag = 1;
+% 
+% n= 4   ;
+% tau = 5   ;
+% windowSize = 2;
+% Range_divider_thr = 10;
 
 Anti_Log = 0  ;
 Use_Smoothed_Curve =0  ;
@@ -33,15 +20,23 @@ Plot_Hill_Mesh_Flag = 0;
 
 
 
+N_t = length(timespan);
+
+TF(1).TF = sin(2*pi*timespan/(55)+(2*pi*.15*(rand(1,N_t)-.5)));
+TF(2).TF = sin(2*pi*(timespan+randperm(59,1))/(60)+(2*pi*.15*(rand(1,N_t)-.5)));
+
+Num_TF = length(TF);
+
+
 Y0= .8*rand+.1;%T_real_ts(shift+1);
 
-[TF_d,TF_s,TF_b,y_out] = Generate_Target_ts(TF,Logic_Output,Y0,timespan,windowSize,...
+[~,~,TF_b,y_out] = Generate_Target_ts(TF,Logic_Output,Y0,timespan,windowSize,...
     Range_divider_thr,Use_Smoothed_Curve,Anti_Log,plot_ts_flag,Plot_Hill_Mesh_Flag,Use_Hill_Flag,...
-    normalized_hill_flag,n,tau,Normalize_Input_Flag,shift_1,shift_2,Noise_Level);
+    normalized_hill_flag,n,tau,Normalize_Input_Flag,shift_1,shift_2,Noise_Level_Target);
 
 
 %Discretize T_real_ts to identify the logic
-[T_d,T_s] = up_discretize(y_out,windowSize,Range_divider_thr,Use_Smoothed_Curve);
+[T_d,~] = up_discretize(y_out,windowSize,Range_divider_thr,Use_Smoothed_Curve);
 T_b = (T_d==1)+0;
 T_b(isnan(T_d)) = NaN;
 %plot(timespan_Tb,T_s,'g','linewidth',2);

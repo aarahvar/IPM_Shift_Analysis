@@ -21,7 +21,6 @@ Detection_Count_in_State = zeros(Num_State,2);
 
 
 
-clc
 % 00
 ind = find(~TF_bb(1).TF_b & ~TF_bb(2).TF_b);
 ind((Shift_Max+ind)> N)=[];
@@ -71,6 +70,8 @@ end
 
 
 if Display_Detection_Flag
+    clc
+
     display('***************************')
     
     

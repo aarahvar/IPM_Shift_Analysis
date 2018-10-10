@@ -19,6 +19,7 @@ end
 %Find the index of the minimum Entropy
 Sorted_Entropy = sort(Entropy(:));
 Detected_Output_Over_Shift=[];
+Sorted_Shift_Index = [];
 m=0;
 
 Same_Entropy = [];
@@ -31,6 +32,7 @@ for i=1:length(Sorted_Entropy)
     %To do this, we store these values of entropy and monitor by this vector if the current entropy has been observed before or not
     if length(Shift_1)>1
         if ismember(Sorted_Entropy(i),Same_Entropy)
+            Ignored_Index = [Ignored_Index i];
             continue
         else
             Same_Entropy = [Same_Entropy Sorted_Entropy(i)];
