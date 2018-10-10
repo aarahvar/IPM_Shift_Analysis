@@ -32,9 +32,10 @@ for Error_Rate_Binary = .05:.05:.5;
         display(N)
         for iter = 1:Max_Iter
             
-            %Choose an arbitrary logic
+            %Choose an arbitrary logic (except all 0 and all 1)
             Logic_Output_All = de2bi(1:14,'left-msb');
             Logic_Output = Logic_Output_All(randperm(size(Logic_Output_All,1),1),:);
+            Logic_Output_decimal = bi2de(Logic_Output,'left-msb');
             
             Sorted_Entropy = [];
             while isempty(Sorted_Entropy)
