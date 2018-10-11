@@ -41,7 +41,7 @@ y_out = Generate_Target_ts(TF,Logic_Output,Y0,timespan,plot_ts_flag,Plot_Hill_Me
 
 
 %Discretize T_real_ts to identify the logic
-[T_d,~] = up_discretize(y_out,windowSize,Range_divider_thr,Use_Smoothed_Curve);
+[T_d,~] = up_down_discretize(y_out,windowSize,Range_divider_thr,Use_Smoothed_Curve);
 T_b = (T_d==1)+0;
 T_b(isnan(T_d)) = NaN;
 %plot(timespan_Tb,T_s,'g','linewidth',2);

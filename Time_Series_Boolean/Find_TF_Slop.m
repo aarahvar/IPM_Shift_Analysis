@@ -5,7 +5,7 @@ Num_TF = length(TF);
 
 
 for i=1:length(TF)
-    [TF_d(i).TF_d,TF_s(i).TF_s] = up_discretize(TF(i).TF,windowSize,Range_divider_thr,Use_Smoothed_Curve);
+    [TF_d(i).TF_d,TF_s(i).TF_s] = up_down_discretize(TF(i).TF,windowSize,Range_divider_thr,Use_Smoothed_Curve);
     
     if Use_Smoothed_Curve
         TF(i).TF = TF_s(i).TF_s;

@@ -1,4 +1,4 @@
-function [Discretized,ts_smoothes] = up_discretize(ts,windowSize,Range_divider_thr,Use_Smoothed_Curve)
+function [Discretized,ts_smoothes] = up_down_discretize(ts,windowSize,Range_divider_thr,Use_Smoothed_Curve)
 
 ts=ts(:);
 Num_NaN = sum(isnan(ts));
