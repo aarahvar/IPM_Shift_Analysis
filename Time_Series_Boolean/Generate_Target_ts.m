@@ -1,32 +1,21 @@
-function [TF_d,TF_s,TF_b,y_out] = Generate_Target_ts(TF,Logic_Output,Y0,timespan,windowSize,...
-    Range_divider_thr,Use_Smoothed_Curve,Anti_Log,plot_ts_flag,Plot_Hill_Mesh_Flag,Use_Hill_Flag,normalized_hill_flag,...
-    n,tau,Normalize_Input_Flag,shift_1,shift_2,Noise_Level)
+function y_out = Generate_Target_ts(TF,Logic_Output,Y0,timespan,plot_ts_flag,Plot_Hill_Mesh_Flag,...
+    Use_Hill_Flag,normalized_hill_flag,n,tau,shift_1,shift_2,Noise_Level)
 
-Num_TF = length(TF);
+synthetic_term = Interpolate_Production_Term(Logic_Output,TF,Plot_Hill_Mesh_Flag,Use_Hill_Flag,normalized_hill_flag,n,shift_1,shift_2);
 
-if Anti_Log
-    for i=1:Num_TF
-        TF(i).TF=2.^TF(i).TF;
-    end
+
+nTime     = length(synthetic_term);
+y_out    = zeros(nTime, length(Y0));
+y_out(1, :) = Y0;
+y0=Y0;
+for iTime = 2:nTime-1
+    [~, y_] = ode45(@(t,y) odefcn(y,tau, synthetic_term(iTime)), timespan(iTime-1:iTime), y0+Noise_Level*(rand(1)-.5));
+    y0       = y_(end, :);
+    y_out(iTime, :) = y0;
 end
 
-for i=1:Num_TF
-    if Normalize_Input_Flag %Nomalize beteen [0 1]
-        TF(i).TF = (TF(i).TF-min(TF(i).TF))/(max(TF(i).TF)-min(TF(i).TF));
-    else %Only normal maximum to one
-        TF(i).TF = TF(i).TF/max(TF(i).TF);
-    end
-    TF(i).mean = mean(TF(i).TF);
-end
+y_out = [NaN(max(shift_1,shift_2),1);y_out];
 
-
-
-%Find the slope of the target gene based on the Logic_Output vector
-[TF_d,TF_s,TF_b,y_out]= Convert_Binary2Analog(TF,Logic_Output,Y0,timespan,windowSize,...
-    Range_divider_thr,Use_Smoothed_Curve,Anti_Log,plot_ts_flag,Plot_Hill_Mesh_Flag,Use_Hill_Flag,normalized_hill_flag,n,tau,shift_1,shift_2,Noise_Level);
-
-% Mean_T_Real = mean(T_real_ts);
-% y_out = y_out-mean(y_out)+Mean_T_Real;
 
 y_out = (y_out-min(y_out));
 y_out = y_out/max(y_out);

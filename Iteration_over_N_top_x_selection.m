@@ -3,19 +3,17 @@ addpath([pwd '\Time_Series_Boolean'])
 clear all
 %Flag_1D = 0: shift_1 ~= shift_2 | 1: shift_1 = shift_2
 Flag_1D = 0 ;
-Binary_Simulation = 0;
+Binary_Simulation = 1;
 
 max_shift= 5;
 Remove_percent = .05;
 Display_Detection_Flag = 0;
-Logic_Output = [1 1 0 1];
-Logic_Output_decimal = bi2de(Logic_Output,'left-msb');
 
 Shift_Generate_1 = 2 ;
 Shift_Generate_2 = 3 ;
 
-N_vec = [10:10:90 100:100:1000];
-Max_Iter = 1000;
+N_vec =[10:10:90 100:100:1000];
+Max_Iter = 10000;
 
 Entropy_min = [];
 shift_min_1 = [];
@@ -26,10 +24,26 @@ clc
 
 Error_Rate_Binary = 0.2;
 
-parfor n = 1:length(N_vec)
+Detection_rate1 = zeros(Max_Iter,length(N_vec));
+Detection_rate2 = zeros(Max_Iter,length(N_vec));
+Detection_rate3 = zeros(Max_Iter,length(N_vec));
+Detection_rate4 = zeros(Max_Iter,length(N_vec));
+Detection_rate5 = zeros(Max_Iter,length(N_vec));
+Entropy_min = zeros(Max_Iter,length(N_vec));
+shift_min_1 = zeros(Max_Iter,length(N_vec));
+shift_min_2 = zeros(Max_Iter,length(N_vec));
+
+for n = 1:length(N_vec)
     N = N_vec(n);
     display(N)
-    for iter = 1:Max_Iter
+    
+    
+    parfor iter = 1:Max_Iter
+        %Choose an arbitrary logic (except all 0 and all 1)
+        Logic_Output_All = de2bi(1:14,'left-msb');
+        Logic_Output = Logic_Output_All(randperm(size(Logic_Output_All,1),1),:);
+        Logic_Output_decimal = bi2de(Logic_Output,'left-msb');
+        
         
         Sorted_Entropy = [];
         while isempty(Sorted_Entropy)
@@ -68,9 +82,6 @@ parfor n = 1:length(N_vec)
             shift_min_2(iter,n) = Sorted_Shift_Index(1,2);
             Gate_decimal = bi2de(Detected_Output_Over_Shift,'left-msb');
             
-%             Error_rate(iter,n) = (Logic_Output_decimal ~= Gate_decimal(1))
-           
-            Num_top_selection = 4;
             Detection_rate1(iter,n) = ismember(Logic_Output_decimal,Gate_decimal(1:min(size(Gate_decimal,1),1)));
             Detection_rate2(iter,n) = ismember(Logic_Output_decimal,Gate_decimal(1:min(size(Gate_decimal,1),2)));
             Detection_rate3(iter,n) = ismember(Logic_Output_decimal,Gate_decimal(1:min(size(Gate_decimal,1),3)));

@@ -8,8 +8,6 @@ Binary_Simulation = 1;
 max_shift= 5;
 Remove_percent = .05;
 Display_Detection_Flag = 0;
-Logic_Output = [1 1 0 1];
-Logic_Output_decimal = bi2de(Logic_Output,'left-msb');
 
 Shift_Generate_1 = 2 ;
 Shift_Generate_2 = 3 ;
@@ -24,13 +22,18 @@ Error_rate=[];
 
 clc
 
+Detection_rate1 = zeros(Max_Iter,length(N_vec));
+Entropy_min = zeros(Max_Iter,length(N_vec));
+shift_min_1 = zeros(Max_Iter,length(N_vec));
+shift_min_2 = zeros(Max_Iter,length(N_vec));
+
 
 for Error_Rate_Binary = .05:.05:.5;
     
-    parfor n = 1:length(N_vec)
+    for n = 1:length(N_vec)
         N = N_vec(n);
         display(N)
-        for iter = 1:Max_Iter
+        parfor iter = 1:Max_Iter
             
             %Choose an arbitrary logic (except all 0 and all 1)
             Logic_Output_All = de2bi(1:14,'left-msb');

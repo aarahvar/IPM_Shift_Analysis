@@ -48,7 +48,8 @@ end
 
 Y0= .8*rand+.1;%T_real_ts(shift+1);
 
-y_out = Generate_Target_ts(TF,Logic_Output,Y0,timespan,plot_ts_flag,Plot_Hill_Mesh_Flag,Use_Hill_Flag,normalized_hill_flag,n,tau,shift_1,shift_2,Noise_Level);
+y_out = Generate_Target_ts(TF,Logic_Output,Y0,timespan,plot_ts_flag,Plot_Hill_Mesh_Flag,...
+    Use_Hill_Flag,normalized_hill_flag,n,tau,shift_1,shift_2,Noise_Level);
 
 
 %Discretize T_real_ts to identify the logic
