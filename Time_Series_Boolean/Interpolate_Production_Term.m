@@ -7,7 +7,7 @@ TF_Original = TF;
 % Transform the TF levels according to their own mean
 if Hill_fn_flag
     for i=1:Num_TF
-        TF(i).TF = Hill_function(TF(i).TF,n,TF(i).mean,'up',normalized_hill_flag);
+        TF(i).TF = Hill_function(TF(i).TF,n,mean(TF(i).TF),'up',normalized_hill_flag);
     end
 end
 

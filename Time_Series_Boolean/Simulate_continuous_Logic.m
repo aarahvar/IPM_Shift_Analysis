@@ -25,30 +25,19 @@ N_t = length(timespan);
 TF(1).TF = sin(2*pi*timespan/(55)+(2*pi*.15*(rand(1,N_t)-.5)));
 TF(2).TF = sin(2*pi*(timespan+randperm(59,1))/(60)+(2*pi*.15*(rand(1,N_t)-.5)));
 
-Num_TF = length(TF);
+%Preprocess the time series of TFs (Anti-log and normalization)
+TF(1).TF = Preprocess_Timeseries(TF(1).TF,Anti_Log,Normalize_Input_Flag);
+TF(2).TF = Preprocess_Timeseries(TF(2).TF,Anti_Log,Normalize_Input_Flag);
 
-if Anti_Log
-    for i=1:Num_TF
-        TF(i).TF=2.^TF(i).TF;
-    end
-end
 
-for i=1:Num_TF
-    if Normalize_Input_Flag %Nomalize beteen [0 1]
-        TF(i).TF = (TF(i).TF-min(TF(i).TF))/(max(TF(i).TF)-min(TF(i).TF));
-    else %Only normal maximum to one
-        TF(i).TF = TF(i).TF/max(TF(i).TF);
-    end
-    TF(i).mean = mean(TF(i).TF);
-end
-
-[TF_d,TF_s,TF_b]=Find_TF_Slop(TF,windowSize,Range_divider_thr,Logic_Output,Use_Smoothed_Curve,...
+[TF_b,~]=Find_TF_Slop(TF,windowSize,Range_divider_thr,Logic_Output,Use_Smoothed_Curve,...
     Anti_Log,plot_ts_flag,timespan,shift_1,shift_2);
 
 
-Y0= .8*rand+.1;%T_real_ts(shift+1);
+Y0= .8*rand+.1;
 
-y_out = Generate_Target_ts(TF,Logic_Output,Y0,timespan,plot_ts_flag,Plot_Hill_Mesh_Flag,Use_Hill_Flag,normalized_hill_flag,n,tau,shift_1,shift_2,Noise_Level);
+%Generate the time-series of the target gene basef on the TFs' time-series
+y_out = Generate_Target_ts(TF,Logic_Output,Y0,timespan,plot_ts_flag,Plot_Hill_Mesh_Flag,Use_Hill_Flag,normalized_hill_flag,n,tau,shift_1,shift_2,Noise_Level_Target);
 
 
 %Discretize T_real_ts to identify the logic

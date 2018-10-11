@@ -4,6 +4,7 @@ function y_out = Generate_Target_ts(TF,Logic_Output,Y0,timespan,plot_ts_flag,Plo
 synthetic_term = Interpolate_Production_Term(Logic_Output,TF,Plot_Hill_Mesh_Flag,Use_Hill_Flag,normalized_hill_flag,n,shift_1,shift_2);
 
 
+%Solve the ODE to generate the target gene time-series
 nTime     = length(synthetic_term);
 y_out    = zeros(nTime, length(Y0));
 y_out(1, :) = Y0;
@@ -16,7 +17,7 @@ end
 
 y_out = [NaN(max(shift_1,shift_2),1);y_out];
 
-
+%Normalize the output
 y_out = (y_out-min(y_out));
 y_out = y_out/max(y_out);
 
