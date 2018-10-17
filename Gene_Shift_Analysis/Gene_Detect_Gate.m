@@ -8,7 +8,7 @@ addpath(current_path(1:(index(end)-1)))
 Flag_1D = 0 ;
 Manual_Flag = 1; %1:use manually digitized data
 
-max_shift= 5;
+max_shift= 6;
 Remove_percent = .05;
 Display_Detection_Flag = 0;
 
@@ -61,11 +61,19 @@ TF1_name = 'YPL049C';
 TF2_name = 'YBR083W';
 T_name = 'YHR005C';
 
+%AND
+TF1_name = 'YDR310C';
+TF2_name = 'YPR065W';
+T_name = 'YOR315W';
 
+%RF1*~RF2
+TF1_name = 'YKL032C';
+TF2_name = 'YLR182W';
+T_name = 'YOR315W';
 
 % %
 total_flag = 1;
-ts_set_number = 2;
+ts_set_number = 1;
 
 plot_ts_flag = 1;
 windowSize = 4;
@@ -187,17 +195,7 @@ else
         xlim([timespan(1) timespan(end)]);
         
     end
-    
-    
-    
 end
-
-
-
-
-
-
-
 
 
 
@@ -219,6 +217,7 @@ end
 [Cnt_0_1,P_0_1] = Detect_Logic_in_TimeSeries(TF_b,T_b,shift_min_1,shift_min_2,[],1);
 
 %Calculate entropy
+clc
 display(' ')
 if Flag_1D
     display('================ 1D ========================')
@@ -238,6 +237,9 @@ end
 display(' ')
 for i=1:length(Sorted_Shift_Index)
     display([num2str([Sorted_Shift_Index(i,:) Detected_Output_Over_Shift(i,:) Sorted_Entropy(i) ],2) '    [' num2str(Remove_Index(i).index',2) ']'])
+    if i==5
+        display('_____________________________________________________________');
+    end
 end
 
 
