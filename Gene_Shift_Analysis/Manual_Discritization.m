@@ -12,7 +12,7 @@ if ~isempty(which('Yeast_CellCycle.mat')) && ~exist('Yeast_CellCycle')
     load('Yeast_CellCycle.mat');
 end
 
-Gene_Name = 'YDR253C';
+Gene_Name = 'YDR310C';
 
 if lower(Gene_Name(1))=='y'
     Gene_Name= Gene_Sysname_2_Stdname(Gene_Name);
@@ -38,7 +38,7 @@ ts_set_number = 2;
 
 plot_ts_flag = 1;
 windowSize = 4;
-Range_divider_thr = 10;
+Range_divider_thr = 30;
 
 
 timespan = 0:5:205;
@@ -56,6 +56,7 @@ if exist('Yeast_CellCycle') && isfield(Yeast_CellCycle,upper(Gene_Name))
     eval(['syn1_b = Yeast_CellCycle.' upper(Gene_Name) '.syn1_b;']);
     eval(['syn2_b = Yeast_CellCycle.' upper(Gene_Name) '.syn2_b;']);
     
+    
 else
     Gene_Index = geneStd2Num({lower(Gene_Name)});
     if Gene_Index == -1
@@ -63,10 +64,10 @@ else
         return
     end
     
-    Gene.expr1 = expr1( Gene_Index,:);
-    Gene.expr2 = expr2( Gene_Index,:);
-    Gene.syn1 = syn1( Gene_Index,:);
-    Gene.syn2 = syn2( Gene_Index,:);
+    Gene.expr1 = a;expr1( Gene_Index,:);
+    Gene.expr2 = a;expr2( Gene_Index,:);
+    Gene.syn1 = a;syn1( Gene_Index,:);
+    Gene.syn2 = a;syn2( Gene_Index,:);
     
     Gene.expr1 = Preprocess_Timeseries(Gene.expr1,Anti_Log,Normalize_Input_Flag);
     Gene.expr2 = Preprocess_Timeseries(Gene.expr2,Anti_Log,Normalize_Input_Flag);
@@ -183,10 +184,17 @@ while 1
     
 end
 
-expr1_b = expr1_b';
-expr2_b = expr2_b';
-syn1_b = syn1_b';
-syn2_b = syn2_b';
+expr1_b = expr1_b(:)';
+expr2_b = expr2_b(:)';
+syn1_b = syn1_b(:)';
+syn2_b = syn2_b(:)';
+
+Gene.expr1 = Gene.expr1(:)';
+Gene.expr2 = Gene.expr2(:)';
+Gene.syn1 = Gene.syn1(:)';
+Gene.syn2 = Gene.syn2(:)';
+
+
 
 eval(['Yeast_CellCycle.' upper(Gene_Name) '.expr1= Gene.expr1;']);
 eval(['Yeast_CellCycle.' upper(Gene_Name) '.expr1_b= expr1_b;']);

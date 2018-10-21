@@ -7,7 +7,7 @@ function [Entropy,Remove_Index] = Find_Entropy_01(Cnt_0_1,P_0_1,Remove_percent)
 %is less than 5% (Remove_percent) of the total number of the samples, we do not consider this state in calculations
 Remove_Index = ~(Cnt_0_1(:,1) & Cnt_0_1(:,2));
 Sum_Cnt = sum(Cnt_0_1,2);
-Remove_Index = Remove_Index & Sum_Cnt<(Remove_percent*sum(sum(Cnt_0_1)));
+Remove_Index = Remove_Index | Sum_Cnt<(Remove_percent*sum(sum(Cnt_0_1)));
 if sum(Remove_Index)~=0
     P_0_1(Remove_Index,: )=[];
     
