@@ -39,7 +39,7 @@ TF2_name = 'ndd1';
 T_name = 'clb2';
 
 
-Num_Row = 13 ;
+Num_Row = 53 ;
 
 TF1_name = cell2mat(excel_cDTA.TF1(Num_Row));
 TF2_name = cell2mat(excel_cDTA.TF2(Num_Row));

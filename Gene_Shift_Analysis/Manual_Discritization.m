@@ -12,7 +12,7 @@ if ~isempty(which('Yeast_CellCycle.mat')) && ~exist('Yeast_CellCycle')
     load('Yeast_CellCycle.mat');
 end
 
-Gene_Name = 'YDR310C';
+Gene_Name = 'YHR084W';
 
 if lower(Gene_Name(1))=='y'
     Gene_Name= Gene_Sysname_2_Stdname(Gene_Name);
