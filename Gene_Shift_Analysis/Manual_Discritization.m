@@ -64,10 +64,10 @@ else
         return
     end
     
-    Gene.expr1 = a;expr1( Gene_Index,:);
-    Gene.expr2 = a;expr2( Gene_Index,:);
-    Gene.syn1 = a;syn1( Gene_Index,:);
-    Gene.syn2 = a;syn2( Gene_Index,:);
+    Gene.expr1 = expr1( Gene_Index,:);
+    Gene.expr2 = expr2( Gene_Index,:);
+    Gene.syn1 = syn1( Gene_Index,:);
+    Gene.syn2 = syn2( Gene_Index,:);
     
     Gene.expr1 = Preprocess_Timeseries(Gene.expr1,Anti_Log,Normalize_Input_Flag);
     Gene.expr2 = Preprocess_Timeseries(Gene.expr2,Anti_Log,Normalize_Input_Flag);

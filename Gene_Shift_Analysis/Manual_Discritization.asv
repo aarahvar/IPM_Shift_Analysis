@@ -12,7 +12,7 @@ if ~isempty(which('Yeast_CellCycle.mat')) && ~exist('Yeast_CellCycle')
     load('Yeast_CellCycle.mat');
 end
 
-Gene_Name = 'cin5';
+Gene_Name = 'YHR084W';
 
 if lower(Gene_Name(1))=='y'
     Gene_Name= Gene_Sysname_2_Stdname(Gene_Name);
@@ -64,10 +64,10 @@ else
         return
     end
     
-    Gene.expr1 = a;expr1( Gene_Index,:);
-    Gene.expr2 = a;expr2( Gene_Index,:);
-    Gene.syn1 = a;syn1( Gene_Index,:);
-    Gene.syn2 = a;syn2( Gene_Index,:);
+    Gene.expr1 = expr1( Gene_Index,:);
+    Gene.expr2 = expr2( Gene_Index,:);
+    Gene.syn1 = syn1( Gene_Index,:);
+    Gene.syn2 = syn2( Gene_Index,:);
     
     Gene.expr1 = Preprocess_Timeseries(Gene.expr1,Anti_Log,Normalize_Input_Flag);
     Gene.expr2 = Preprocess_Timeseries(Gene.expr2,Anti_Log,Normalize_Input_Flag);
