@@ -121,7 +121,7 @@ for i = max(2,Manually_Processed_Index(1)):length(Loregic_Tri_Sorted_Periodic_Ra
                 save ('Yeat_Cyclebase_5min.mat','Loregic_Tri_Sorted_Periodic_Rank','ts_value_5min');
                 break
             end
-
+            
             
             Gene_ts_b = Gene_ts_b(:)';
             Gene_ts = Gene_ts(:)';
@@ -132,11 +132,12 @@ for i = max(2,Manually_Processed_Index(1)):length(Loregic_Tri_Sorted_Periodic_Ra
             eval(['ts_value_5min.' Gene_Name '.' ts_Source_Name{s} '.ts=Gene_ts;']);
             
             save ('Yeat_Cyclebase_5min.mat','Loregic_Tri_Sorted_Periodic_Rank','ts_value_5min');
-            Manually_Processed_Index = [i j];
-            save('Manually_Processed_Index.mat','Manually_Processed_Index');
-            save('Processed_Gene_Name.mat','Processed_Gene_Name');
             
         end
+        Manually_Processed_Index = [i j];
+        save('Manually_Processed_Index.mat','Manually_Processed_Index');
+        save('Processed_Gene_Name.mat','Processed_Gene_Name');
     end
+    
 end
 
