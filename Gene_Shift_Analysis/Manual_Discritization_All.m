@@ -30,10 +30,9 @@ for i = max(2,Manually_Processed_Index(1)):length(Loregic_Tri_Sorted_Periodic_Ra
         Gene_Name = Loregic_Tri_Sorted_Periodic_Rank{i,j};
         
         if ismember(Gene_Name,Processed_Gene_Name)
-            continue
+            continue;
         else
             Processed_Gene_Name{end+1}=Gene_Name;
-            save('Processed_Gene_Name.mat','Processed_Gene_Name');
         end
         
         %Check if the gene exists in the structure
@@ -90,15 +89,15 @@ for i = max(2,Manually_Processed_Index(1)):length(Loregic_Tri_Sorted_Periodic_Ra
             while 1
                 [x,~,button] = ginput(1);
                 if button == 27 %<Esc>
-                    break
+                    break;
                 end
                 
                 if button == 113 %'q'
-                    break
+                    break;
                 end
                 
                 if button == 120 %'x'
-                    return
+                    return;
                 end
                 
                 x = round(x);
@@ -135,6 +134,8 @@ for i = max(2,Manually_Processed_Index(1)):length(Loregic_Tri_Sorted_Periodic_Ra
             save ('Yeat_Cyclebase_5min.mat','Loregic_Tri_Sorted_Periodic_Rank','ts_value_5min');
             Manually_Processed_Index = [i j];
             save('Manually_Processed_Index.mat','Manually_Processed_Index');
+            save('Processed_Gene_Name.mat','Processed_Gene_Name');
+            
         end
     end
 end
