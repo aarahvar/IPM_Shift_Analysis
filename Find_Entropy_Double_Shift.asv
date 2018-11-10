@@ -7,10 +7,8 @@ for shift_Detect_1 = 0:max_shift
     for shift_Detect_2 = 0:max_shift
         %Find the probability of 0 and 1 as the detected output for each input state
         if sum(isnan(TF_b(1).TF_b)) ==0
-            [Cnt_0_1,P_0_1] = Detect_Logic_in_TimeSeries(TF_b,T_b,shift_Detect_1,shift_Detect_2,[],0);
-        else
-            [Cnt_0_1,P_0_1] = Detect_Logic_in_TimeSeries_All(TF_b,T_b,shift_Detect_1,shift_Detect_2,[],0);
-        end
+            
+        [Cnt_0_1,P_0_1] = Detect_Logic_in_TimeSeries(TF_b,T_b,shift_Detect_1,shift_Detect_2,[],0);
         
         %Calculate entropy
         [Entropy(shift_Detect_1+1,shift_Detect_2+1),Remove_Index_Struct(shift_Detect_1+1,shift_Detect_2+1).index] = Find_Entropy_01(Cnt_0_1,P_0_1,Remove_percent);
