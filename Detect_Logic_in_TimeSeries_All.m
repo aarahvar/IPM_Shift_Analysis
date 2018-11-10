@@ -1,9 +1,9 @@
 function [Detection_Count_in_State,Detection_Probability_in_State] = Detect_Logic_in_TimeSeries_All(TF_b,T_b,shift_1,shift_2,Logic_Output,Display_Detection_Flag)
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-shift_1 = 3;
-shift_2 = 1;
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% shift_1 = 3;
+% shift_2 = 1;
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 NaN_Index = [0 find(isnan(TF_b(1).TF_b))];
@@ -60,7 +60,7 @@ end
 
 %% 01
 ind = find(~TF1_bb & TF2_bb);
-count01=hist(T_b(Shift_Max+ind'),[0 1]);
+count01=hist(T_bb(ind'),[0 1]);
 Detection_Probability_in_State(2,:) = count01/sum(count01);
 Detection_Count_in_State(2,:) = count01;
 
@@ -71,8 +71,7 @@ end
 
 %% 10
 ind = find(TF1_bb & ~TF2_bb);
-ind((Shift_Max+ind)> N)=[];
-count10=hist(T_b(Shift_Max+ind'),[0 1]);
+count10=hist(T_bb(ind'),[0 1]);
 Detection_Probability_in_State(3,:) = count10/sum(count10);
 Detection_Count_in_State(3,:) = count10;
 
@@ -83,8 +82,7 @@ end
 
 %11
 ind = find(TF1_bb & TF2_bb);
-ind((Shift_Max+ind)> N)=[];
-count11=hist(T_b(Shift_Max+ind'),[0 1]);
+count11=hist(T_bb(ind'),[0 1]);
 Detection_Probability_in_State(4,:) = count11/sum(count11);
 Detection_Count_in_State(4,:) = count11;
 

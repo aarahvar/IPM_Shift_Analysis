@@ -29,7 +29,7 @@ Source_Name =fieldnames(ts_value_5min.YLR268W);
 
 %============================================================================
 
-Num_Row = 2 ;
+Num_Row = 30 ;
 
 TF1_name = cell2mat(Loregic_Tri_Sorted_Periodic_Rank(Num_Row,1));
 TF2_name = cell2mat(Loregic_Tri_Sorted_Periodic_Rank(Num_Row,2));
@@ -112,20 +112,20 @@ TF_b(1).TF_b = ts_Total.TF1_b;
 TF_b(2).TF_b = ts_Total.TF2_b;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-s1 = 3;
-s2=1;
-TF_b(1).TF_b = randint(1,300);
-TF_b(2).TF_b = randint(1,300);
-Tbb (s1+1:200+s1)=TF_b(1).TF_b(1:200) & TF_b(1).TF_b(3:202)
-
-Tbb = Tbb(1:200);
-TF_b(1).TF_b = TF_b(1).TF_b(1:200);
-TF_b(2).TF_b = TF_b(2).TF_b(1:200);
-nanind = [10 50 80 120];
-TF_b(1).TF_b(nanind)=NaN;
-TF_b(2).TF_b(nanind)=NaN;
-
-%ts_Total.T_b(~isnan(ts_Total.T_b)) = (TF_b(1).TF_b(~isnan(TF_b(1).TF_b))) & (TF_b(2).TF_b(~isnan(TF_b(2).TF_b)));
+% s1 = 3;
+% s2=1;
+% TF_b(1).TF_b = randi([0 1],1,300);
+% TF_b(2).TF_b = randi([0 1],1,300);
+% Tbb (4:203)=TF_b(1).TF_b(1:200) & ~TF_b(2).TF_b(3:202);
+% 
+% Tbb = Tbb(4:203)+0;
+% TF_b(1).TF_b = TF_b(1).TF_b(4:203);
+% TF_b(2).TF_b = TF_b(2).TF_b(4:203);
+% nanind = [10 50 80 120];
+% TF_b(1).TF_b(nanind)=NaN;
+% TF_b(2).TF_b(nanind)=NaN;
+% Tbb(nanind)=NaN;
+% ts_Total.T_b = Tbb;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Calculate the entopies and the detect the gates
@@ -142,8 +142,6 @@ else
 end
 
 
-%Find the probability of 0 and 1 as the detected output for each input state
-[Cnt_0_1,P_0_1] = Detect_Logic_in_TimeSeries(TF_b,T_b,shift_min_1,shift_min_2,[],0);
 
 %Calculate entropy
 %clc
