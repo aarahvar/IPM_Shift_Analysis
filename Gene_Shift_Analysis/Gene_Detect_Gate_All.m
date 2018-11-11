@@ -29,7 +29,7 @@ Source_Name =fieldnames(ts_value_5min.YLR268W);
 
 %============================================================================
 
-Num_Row = 30 ;
+% Num_Row = 12 ;
 
 TF1_name = cell2mat(Loregic_Tri_Sorted_Periodic_Rank(Num_Row,1));
 TF2_name = cell2mat(Loregic_Tri_Sorted_Periodic_Rank(Num_Row,2));
@@ -57,9 +57,14 @@ ts_Total.TF2_b = [];
 ts_Total.T = [];
 ts_Total.T_b = [];
 for i = 1:length(Source_Name)
-    TF1_ts = getfield(TF1,cell2mat(Source_Name(i)));
-    TF2_ts = getfield(TF2,cell2mat(Source_Name(i)));
-    T_ts = getfield(T,cell2mat(Source_Name(i)));
+    source_name = cell2mat(Source_Name(i));
+   
+    if ~(isfield(TF1,source_name) && isfield(TF2,source_name) && isfield(T,source_name))
+        continue
+    end
+    TF1_ts = getfield(TF1,source_name);
+    TF2_ts = getfield(TF2,source_name);
+    T_ts = getfield(T,source_name);
     
     if ~isempty(TF1_ts.ts) && ~isempty(TF2_ts.ts) && ~isempty(T_ts.ts) && (isfield(TF1_ts,'ts_b') && ~isempty(TF1_ts.ts_b)) && ...
             (isfield(TF2_ts,'ts_b') && ~isempty(TF2_ts.ts_b)) && (isfield(T_ts,'ts_b') && ~isempty(T_ts.ts_b))

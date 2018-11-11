@@ -22,7 +22,7 @@ plot_ts_flag = 1;
 windowSize = 2;
 Range_divider_thr = 20;
 
-for i = max(2,Manually_Processed_Index(1)):length(Loregic_Tri_Sorted_Periodic_Rank)
+for i = max(2,Manually_Processed_Index(1)):217%length(Loregic_Tri_Sorted_Periodic_Rank)
     if Manually_Processed_Index(2)==3
         Manually_Processed_Index(2)=0;
     end
@@ -119,7 +119,7 @@ for i = max(2,Manually_Processed_Index(1)):length(Loregic_Tri_Sorted_Periodic_Ra
                 Gene_ts = Gene_ts(:)';
                 eval(['ts_value_5min.' Gene_Name '.' ts_Source_Name{s} '.ts=Gene_ts;']);
                 save ('Yeat_Cyclebase_5min.mat','Loregic_Tri_Sorted_Periodic_Rank','ts_value_5min');
-                break
+                continue
             end
             
             
