@@ -80,6 +80,10 @@ for i = 1:length(Source_Name)
     end
 end
 
+if isempty(ts_Total.TF1) || isempty(ts_Total.TF2) || isempty(ts_Total.TF2)
+    errordlg('No Data!')
+    return
+end
 
 if plot_ts_flag
     figure(10)
@@ -159,7 +163,7 @@ if Flag_1D
     title(['Shift = ' num2str(Sorted_Shift_Index(1,1)) ', Entropy = ' num2str(Sorted_Entropy(1),4) ' , Logic: ' num2str(Detected_Output_Over_Shift(1,:))])
     
 else
-    display('================ 2D ========================')
+    display(['================ 2D (Num_Row =' num2str(Num_Row) ') ========================'])
     figure(2);
     surf(0:max_shift,0:max_shift,Entropy')
     title(['Shift_1 = ' num2str(Sorted_Shift_Index(1,1)) ' , Shift_2 = ' num2str(Sorted_Shift_Index(1,2)) ', Entropy = ' num2str(Sorted_Entropy(1),4) ' , Logic: ' num2str(Detected_Output_Over_Shift(1,:))])
@@ -168,7 +172,7 @@ end
 
 display(' ')
 for i=1:length(Sorted_Shift_Index)
-    if i<6 || sum(Sorted_Shift_Index(i,:))==0
+    if i<10 || sum(Sorted_Shift_Index(i,:))==0
         str_neg = [];
         for ii=1:length(Detected_Output_Over_Shift(i,:))
             if ismember(ii,Remove_Index(i).index)
@@ -182,7 +186,7 @@ for i=1:length(Sorted_Shift_Index)
         display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' str_neg  '   ||   ' num2str(Sorted_Entropy(i),2) ])
         
         %display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' num2str( Detected_Output_Over_Shift(i,:),2)  '   ||   ' num2str(Sorted_Entropy(i),2) '    [' num2str(Remove_Index(i).index',2) ']'])
-        if i==5
+        if i==5 || i==9
             display('_____________________________________________________________');
         end
     end

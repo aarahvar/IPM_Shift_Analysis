@@ -46,7 +46,7 @@ for i=1:length(Sorted_Entropy_Unique)
     %the followin for loop in for handling this situation.
     for k=1:length(Shift_1)
         %If detected logic is all zero or all one we should ignore it
-        Sum_Output_State = sum(Detected_Output_Over_Shift_struct(Shift_1(k)+1).Logic(Shift_2(k)+1,:));
+        Sum_Output_State = sum(abs(Detected_Output_Over_Shift_struct(Shift_1(k)+1).Logic(Shift_2(k)+1,:)));
         if Sum_Output_State~=0 && Sum_Output_State ~=4
             m = m+1;
             Sorted_Entropy(end+1) = Sorted_Entropy_Unique(i);
