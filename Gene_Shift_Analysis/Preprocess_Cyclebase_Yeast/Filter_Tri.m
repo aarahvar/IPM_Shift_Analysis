@@ -1,8 +1,9 @@
 %This function remove the tri-combinations that target gene is same as one of the TFs
-if ~exist('periodic_gene')
+% if ~exist('periodic_gene')
+% load('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Yeat_Cyclebase.mat');
+% end
     load('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Yeat_Cyclebase.mat');
-end
-
+Loregic_Tri = Loregic_Tri_Sorted_Periodic_Rank;
 Remove_index = [];
 for i = 2:length(Loregic_Tri)
     for j = 1:2
@@ -15,4 +16,16 @@ for i = 2:length(Loregic_Tri)
     end
 end
 
-Loregic_Tri(Remove_index,:)=[];
+
+%Some two consecutive row are same as each other and just the order of the inputs are reverse
+for i = 2:length(Loregic_Tri)-1
+    if strcmp(Loregic_Tri{i,1},Loregic_Tri{i+1,2}) && strcmp(Loregic_Tri{i,2},Loregic_Tri{i+1,1}) && ...
+            strcmp(Loregic_Tri{i,3},Loregic_Tri{i+1,3})
+        Remove_index(end+1) = i+1;
+        continue;
+    end
+  
+end
+
+Loregic_Tri(unique(Remove_index),:)=[];
+Loregic_Tri_Sorted_Periodic_Rank = Loregic_Tri;

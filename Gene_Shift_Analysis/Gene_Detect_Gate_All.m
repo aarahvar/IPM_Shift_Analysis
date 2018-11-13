@@ -170,6 +170,7 @@ else
     view(0,90);
 end
 
+Gate_str = [{'0       '},{'AND     '},{'RF1*~RF2'},{'RF1     '} ,{'~RF1*RF2'},{'RF2     '},{'XOR     '},{'OR      '},{'NOR     '},{'XNOR    '},{'~RF2    '},{'RF1+~RF2'},{'~RF1    '},{'~RF1+RF2'},{'NAND    '},{'1       '}];
 display(' ')
 for i=1:length(Sorted_Shift_Index)
     if i<10 || sum(Sorted_Shift_Index(i,:))==0
@@ -183,7 +184,12 @@ for i=1:length(Sorted_Shift_Index)
                 str_neg = [str_neg num2str(Detected_Output_Over_Shift(i,ii))];
             end
         end
-        display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' str_neg  '   ||   ' num2str(Sorted_Entropy(i),2) ])
+        if isempty(str2num(str_neg))
+            display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' str_neg  '   ||   ' '--------   ||   '  num2str(Sorted_Entropy(i),2) ])
+        else
+            display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' str_neg  '   ||   '  Gate_str{bi2de(str_neg=='1','left-msb')+1} '   ||   '  num2str(Sorted_Entropy(i),2) ])
+        end
+
         
         %display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' num2str( Detected_Output_Over_Shift(i,:),2)  '   ||   ' num2str(Sorted_Entropy(i),2) '    [' num2str(Remove_Index(i).index',2) ']'])
         if i==5 || i==9
