@@ -8,7 +8,7 @@ addpath(current_path(1:(index(end)-1)))
 Flag_1D = 0 ;
 Manual_Flag = 1; %1:use manually digitized data
 
-max_shift= 5;
+max_shift= 5 ;
 Remove_percent = .05;
 Display_Detection_Flag = 0;
 
@@ -173,7 +173,7 @@ end
 Gate_str = [{'0       '},{'AND     '},{'RF1*~RF2'},{'RF1     '} ,{'~RF1*RF2'},{'RF2     '},{'XOR     '},{'OR      '},{'NOR     '},{'XNOR    '},{'~RF2    '},{'RF1+~RF2'},{'~RF1    '},{'~RF1+RF2'},{'NAND    '},{'1       '}];
 display(' ')
 for i=1:length(Sorted_Shift_Index)
-    if i<10 || sum(Sorted_Shift_Index(i,:))==0
+    if i<20 || sum(Sorted_Shift_Index(i,:))==0
         str_neg = [];
         for ii=1:length(Detected_Output_Over_Shift(i,:))
             if ismember(ii,Remove_Index(i).index)
@@ -192,7 +192,7 @@ for i=1:length(Sorted_Shift_Index)
 
         
         %display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' num2str( Detected_Output_Over_Shift(i,:),2)  '   ||   ' num2str(Sorted_Entropy(i),2) '    [' num2str(Remove_Index(i).index',2) ']'])
-        if i==5 || i==9
+        if i==5 || i==19
             display('_____________________________________________________________');
         end
     end
