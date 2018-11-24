@@ -4,12 +4,14 @@ index = find(current_path=='\');
 addpath([current_path(1:index(end)) 'Time_Series_Boolean'])
 addpath(current_path(1:(index(end)-1)))
 
-if ~exist('ts_value_5min')
+% if ~exist('ts_value_5min')
     load('Yeat_Cyclebase_5min');
-end
+% end
 
+load('YGMD_2TF_T_Ranked.mat');
 load('Manually_Processed_Index.mat')
 load('Processed_Gene_Name.mat')
+load('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\Gene_Names.mat')
 
 Anti_Log = 0  ;
 Use_Smoothed_Curve =0  ;
@@ -22,12 +24,20 @@ plot_ts_flag = 1;
 windowSize = 2;
 Range_divider_thr = 20;
 
-for i = max(2,Manually_Processed_Index(1)):217%length(Loregic_Tri_Sorted_Periodic_Rank)
+for i = max(2,Manually_Processed_Index(1)):size(YGMD_2TF_T_Ranked,1)
     if Manually_Processed_Index(2)==3
         Manually_Processed_Index(2)=0;
     end
     for j = (Manually_Processed_Index(2)+1):3
-        Gene_Name = Loregic_Tri_Sorted_Periodic_Rank{i,j};
+        Gene_Name = YGMD_2TF_T_Ranked{i,j};
+        Gene_Name = Gene_Name{1,1};
+        
+        %Change the name to ORF style
+        if length(Gene_Name)<5
+           Gene_Name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{i,j}))));
+           Gene_Name = Gene_Name{1,1};
+        end
+        
         
         if ismember(Gene_Name,Processed_Gene_Name)
             continue;
@@ -40,6 +50,7 @@ for i = max(2,Manually_Processed_Index(1)):217%length(Loregic_Tri_Sorted_Periodi
             continue;
         end
         
+       
         Gene =getfield(ts_value_5min,Gene_Name);
         ts_Source_Name =fieldnames(Gene);
         
@@ -81,7 +92,7 @@ for i = max(2,Manually_Processed_Index(1)):217%length(Loregic_Tri_Sorted_Periodi
             plot(Gene_ts,'marker','.','markersize',10);hold on
             plot(Gene_ts_b/2+.25,'r','marker','o','markersize',5)
             xlim([0 length(Gene_ts_b)+1])
-            title([ts_Source_Name{s} ' : ' upper(Gene_Name)])
+            title([ts_Source_Name{s} ' : ' upper(Gene_Name) ' (' cell2mat(YGMD_2TF_T_Ranked{i,j}) ')'])
             
             
             %Edit binary date
@@ -110,7 +121,7 @@ for i = max(2,Manually_Processed_Index(1)):217%length(Loregic_Tri_Sorted_Periodi
                 plot(Gene_ts,'marker','.','markersize',10);hold on
                 plot(Gene_ts_b/2+.25,'r','marker','o','markersize',5)
                 xlim([0 length(Gene_ts_b)+1])
-                title([ts_Source_Name{s} ' : ' upper(Gene_Name)])
+                title([ts_Source_Name{s} ' : ' upper(Gene_Name) ' (' cell2mat(YGMD_2TF_T_Ranked{i,j}) ')'])
                 
             end
             
@@ -118,7 +129,7 @@ for i = max(2,Manually_Processed_Index(1)):217%length(Loregic_Tri_Sorted_Periodi
                 eval(['ts_value_5min.' Gene_Name '.' ts_Source_Name{s} '.ts_b=[];']);
                 Gene_ts = Gene_ts(:)';
                 eval(['ts_value_5min.' Gene_Name '.' ts_Source_Name{s} '.ts=Gene_ts;']);
-                save ('Yeat_Cyclebase_5min.mat','Loregic_Tri_Sorted_Periodic_Rank','ts_value_5min');
+                save ('Yeat_Cyclebase_5min.mat','ts_value_5min');
                 continue
             end
             
@@ -131,7 +142,7 @@ for i = max(2,Manually_Processed_Index(1)):217%length(Loregic_Tri_Sorted_Periodi
             eval(['ts_value_5min.' Gene_Name '.' ts_Source_Name{s} '.ts_b=Gene_ts_b;']);
             eval(['ts_value_5min.' Gene_Name '.' ts_Source_Name{s} '.ts=Gene_ts;']);
             
-            save ('Yeat_Cyclebase_5min.mat','Loregic_Tri_Sorted_Periodic_Rank','ts_value_5min');
+            save ('Yeat_Cyclebase_5min.mat','ts_value_5min');
             
         end
         Manually_Processed_Index = [i j];
