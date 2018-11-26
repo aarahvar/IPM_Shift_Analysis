@@ -8,7 +8,7 @@ addpath(current_path(1:(index(end)-1)))
 Flag_1D = 0 ;
 Manual_Flag = 1; %1:use manually digitized data
 
-max_shift= 5;
+max_shift= 5 ;
 Remove_percent = .05;
 Display_Detection_Flag = 0;
 
@@ -23,17 +23,33 @@ Plot_Hill_Mesh_Flag = 0;
 if ~exist('ts_value_5min')
     load('Yeat_Cyclebase_5min');
 end
+load('YGMD_2TF_T_Ranked.mat');
+load('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\Gene_Names.mat')
 
 %Get the name of the databases
 Source_Name =fieldnames(ts_value_5min.YLR268W);
 
 %============================================================================
 
-% Num_Row = 12 ;
+ Num_Row =4 ;
 
-TF1_name = cell2mat(Loregic_Tri_Sorted_Periodic_Rank(Num_Row,1));
-TF2_name = cell2mat(Loregic_Tri_Sorted_Periodic_Rank(Num_Row,2));
-T_name = cell2mat(Loregic_Tri_Sorted_Periodic_Rank(Num_Row,3));
+TF1_name = cell2mat(YGMD_2TF_T_Ranked{Num_Row,1});
+TF2_name = cell2mat(YGMD_2TF_T_Ranked{Num_Row,2});
+T_name = cell2mat(YGMD_2TF_T_Ranked{Num_Row,3});
+
+%Change the name to ORF style
+if length(TF1_name)<5
+    TF1_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,1}))));
+    TF1_name = TF1_name{1,1};
+end
+if length(TF2_name)<5
+    TF2_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,2}))));
+    TF2_name = TF2_name{1,1};
+end
+if length(T_name)<5
+    T_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,3}))));
+    T_name = T_name{1,1};
+end
 
 
 plot_ts_flag = 1;
@@ -173,7 +189,7 @@ end
 Gate_str = [{'0       '},{'AND     '},{'RF1*~RF2'},{'RF1     '} ,{'~RF1*RF2'},{'RF2     '},{'XOR     '},{'OR      '},{'NOR     '},{'XNOR    '},{'~RF2    '},{'RF1+~RF2'},{'~RF1    '},{'~RF1+RF2'},{'NAND    '},{'1       '}];
 display(' ')
 for i=1:length(Sorted_Shift_Index)
-    if i<10 || sum(Sorted_Shift_Index(i,:))==0
+    if i<20 || sum(Sorted_Shift_Index(i,:))==0
         str_neg = [];
         for ii=1:length(Detected_Output_Over_Shift(i,:))
             if ismember(ii,Remove_Index(i).index)
@@ -185,14 +201,14 @@ for i=1:length(Sorted_Shift_Index)
             end
         end
         if isempty(str2num(str_neg))
-            display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' str_neg  '   ||   ' '           ||   '  num2str(Sorted_Entropy(i),2) ])
+            display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' str_neg  '   ||   ' '--------   ||   '  num2str(Sorted_Entropy(i),2) ])
         else
-            display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' str_neg  '   ||   '  Gate_str{bi2de(str_neg=='1')+1} '   ||   '  num2str(Sorted_Entropy(i),2) ])
+            display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' str_neg  '   ||   '  Gate_str{bi2de(str_neg=='1','left-msb')+1} '   ||   '  num2str(Sorted_Entropy(i),2) ])
         end
 
         
         %display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' num2str( Detected_Output_Over_Shift(i,:),2)  '   ||   ' num2str(Sorted_Entropy(i),2) '    [' num2str(Remove_Index(i).index',2) ']'])
-        if i==5 || i==9
+        if i==5 || i==19
             display('_____________________________________________________________');
         end
     end

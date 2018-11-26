@@ -23,17 +23,33 @@ Plot_Hill_Mesh_Flag = 0;
 if ~exist('ts_value_5min')
     load('Yeat_Cyclebase_5min');
 end
+load('YGMD_2TF_T_Ranked.mat');
+load('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\Gene_Names.mat')
 
 %Get the name of the databases
 Source_Name =fieldnames(ts_value_5min.YLR268W);
 
 %============================================================================
 
-% Num_Row = 12 ;
+%  Num_Row =4 ;
 
-TF1_name = cell2mat(Loregic_Tri_Sorted_Periodic_Rank(Num_Row,1));
-TF2_name = cell2mat(Loregic_Tri_Sorted_Periodic_Rank(Num_Row,2));
-T_name = cell2mat(Loregic_Tri_Sorted_Periodic_Rank(Num_Row,3));
+TF1_name = cell2mat(YGMD_2TF_T_Ranked{Num_Row,1});
+TF2_name = cell2mat(YGMD_2TF_T_Ranked{Num_Row,2});
+T_name = cell2mat(YGMD_2TF_T_Ranked{Num_Row,3});
+
+%Change the name to ORF style
+if length(TF1_name)<5
+    TF1_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,1}))));
+    TF1_name = TF1_name{1,1};
+end
+if length(TF2_name)<5
+    TF2_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,2}))));
+    TF2_name = TF2_name{1,1};
+end
+if length(T_name)<5
+    T_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,3}))));
+    T_name = T_name{1,1};
+end
 
 
 plot_ts_flag = 1;
