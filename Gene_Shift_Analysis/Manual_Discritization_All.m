@@ -33,7 +33,7 @@ for i = max(2,Manually_Processed_Index(1)):size(YGMD_2TF_T_Ranked,1)
         Gene_Name = Gene_Name{1,1};
         
         %Change the name to ORF style
-        if length(Gene_Name)<5
+        if length(Gene_Name)<7 || Gene_Name(1)~='Y'
            Gene_Name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{i,j}))));
            Gene_Name = Gene_Name{1,1};
         end

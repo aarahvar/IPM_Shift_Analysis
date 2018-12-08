@@ -9,7 +9,7 @@ Flag_1D = 0 ;
 Manual_Flag = 1; %1:use manually digitized data
 
 max_shift= 5 ;
-Remove_percent = .05;
+Remove_percent = 0.05;
 Display_Detection_Flag = 0;
 
 Anti_Log = 0  ;
@@ -31,22 +31,22 @@ Source_Name =fieldnames(ts_value_5min.YLR268W);
 
 %============================================================================
 
- Num_Row =4 ;
+%  Num_Row =4 ;
 
 TF1_name = cell2mat(YGMD_2TF_T_Ranked{Num_Row,1});
 TF2_name = cell2mat(YGMD_2TF_T_Ranked{Num_Row,2});
 T_name = cell2mat(YGMD_2TF_T_Ranked{Num_Row,3});
 
 %Change the name to ORF style
-if length(TF1_name)<5
+if length(TF1_name)<7 || TF1_name(1)~='Y'
     TF1_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,1}))));
     TF1_name = TF1_name{1,1};
 end
-if length(TF2_name)<5
+if length(TF2_name)<7 || TF2_name(1)~='Y'
     TF2_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,2}))));
     TF2_name = TF2_name{1,1};
 end
-if length(T_name)<5
+if length(T_name)<7 || T_name(1)~='Y'
     T_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,3}))));
     T_name = T_name{1,1};
 end
@@ -72,7 +72,7 @@ ts_Total.TF2 = [];
 ts_Total.TF2_b = [];
 ts_Total.T = [];
 ts_Total.T_b = [];
-for i = 1:length(Source_Name)
+for i = 1:length(Source_Name)-2
     source_name = cell2mat(Source_Name(i));
    
     if ~(isfield(TF1,source_name) && isfield(TF2,source_name) && isfield(T,source_name))
@@ -137,20 +137,20 @@ TF_b(1).TF_b = ts_Total.TF1_b;
 TF_b(2).TF_b = ts_Total.TF2_b;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% s1 = 3;
-% s2=1;
-% TF_b(1).TF_b = randi([0 1],1,300);
-% TF_b(2).TF_b = randi([0 1],1,300);
-% Tbb (4:203)=TF_b(1).TF_b(1:200) & ~TF_b(2).TF_b(3:202);
-% 
-% Tbb = Tbb(4:203)+0;
-% TF_b(1).TF_b = TF_b(1).TF_b(4:203);
-% TF_b(2).TF_b = TF_b(2).TF_b(4:203);
-% nanind = [10 50 80 120];
-% TF_b(1).TF_b(nanind)=NaN;
-% TF_b(2).TF_b(nanind)=NaN;
-% Tbb(nanind)=NaN;
-% ts_Total.T_b = Tbb;
+s1 = 3;
+s2=2;
+TF_b(1).TF_b = randi([0 1],1,300);
+TF_b(2).TF_b = randi([0 1],1,300);
+Tbb (4:203)=~TF_b(1).TF_b(1:200) & TF_b(2).TF_b(3:202);
+
+Tbb = Tbb(4:203)+0;
+TF_b(1).TF_b = TF_b(1).TF_b(4:203);
+TF_b(2).TF_b = TF_b(2).TF_b(4:203);
+nanind = [10 50 80 120];
+TF_b(1).TF_b(nanind)=NaN;
+TF_b(2).TF_b(nanind)=NaN;
+Tbb(nanind)=NaN;
+ts_Total.T_b = Tbb;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Calculate the entopies and the detect the gates
@@ -170,6 +170,10 @@ end
 
 %Calculate entropy
 %clc
+TF1_name0 = cell2mat(YGMD_2TF_T_Ranked{Num_Row,1});
+TF2_name0 = cell2mat(YGMD_2TF_T_Ranked{Num_Row,2});
+T_name0 = cell2mat(YGMD_2TF_T_Ranked{Num_Row,3});
+
 display(' ')
 if Flag_1D
     display('================ 1D ========================')
@@ -180,6 +184,7 @@ if Flag_1D
     
 else
     display(['================ 2D (Num_Row =' num2str(Num_Row) ') ========================'])
+    display(['********** ' TF1_name0 ' , ' TF2_name0 ' --> ' T_name0 ' **********'])
     figure(2);
     surf(0:max_shift,0:max_shift,Entropy')
     title(['Shift_1 = ' num2str(Sorted_Shift_Index(1,1)) ' , Shift_2 = ' num2str(Sorted_Shift_Index(1,2)) ', Entropy = ' num2str(Sorted_Entropy(1),4) ' , Logic: ' num2str(Detected_Output_Over_Shift(1,:))])
@@ -189,7 +194,7 @@ end
 Gate_str = [{'0       '},{'AND     '},{'RF1*~RF2'},{'RF1     '} ,{'~RF1*RF2'},{'RF2     '},{'XOR     '},{'OR      '},{'NOR     '},{'XNOR    '},{'~RF2    '},{'RF1+~RF2'},{'~RF1    '},{'~RF1+RF2'},{'NAND    '},{'1       '}];
 display(' ')
 for i=1:length(Sorted_Shift_Index)
-    if i<20 || sum(Sorted_Shift_Index(i,:))==0
+    if i<30 || sum(Sorted_Shift_Index(i,:))==0
         str_neg = [];
         for ii=1:length(Detected_Output_Over_Shift(i,:))
             if ismember(ii,Remove_Index(i).index)
@@ -208,7 +213,7 @@ for i=1:length(Sorted_Shift_Index)
 
         
         %display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' num2str( Detected_Output_Over_Shift(i,:),2)  '   ||   ' num2str(Sorted_Entropy(i),2) '    [' num2str(Remove_Index(i).index',2) ']'])
-        if i==5 || i==19
+        if i==5 || i==29
             display('_____________________________________________________________');
         end
     end

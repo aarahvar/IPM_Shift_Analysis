@@ -4,9 +4,9 @@ index = find(current_path=='\');
 addpath([current_path(1:index(end)) 'Time_Series_Boolean'])
 addpath(current_path(1:(index(end)-1)))
 
-if ~exist('ts_value_5min')
+% if ~exist('ts_value_5min')
     load('Yeat_Cyclebase_5min');
-end
+% end
 
 load('YGMD_2TF_T_Ranked.mat');
 load('Manually_Processed_Index.mat')
@@ -29,20 +29,21 @@ for i = max(2,Manually_Processed_Index(1)):size(YGMD_2TF_T_Ranked,1)
         Manually_Processed_Index(2)=0;
     end
     for j = (Manually_Processed_Index(2)+1):3
-        Gene_Name = YGMD_2TF_T_Ranked{i,j};
+        Gene_Name = {'RAD51'};%YGMD_2TF_T_Ranked{i,j};
         Gene_Name = Gene_Name{1,1};
         
         %Change the name to ORF style
         if length(Gene_Name)<5
            Gene_Name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{i,j}))));
+           Gene_Name = Gene_Name{1,1};
         end
         
         
-        if ismember(Gene_Name,Processed_Gene_Name)
-            continue;
-        else
-            Processed_Gene_Name{end+1}=Gene_Name;
-        end
+%         if ismember(Gene_Name,Processed_Gene_Name)
+%             continue;
+%         else
+%             Processed_Gene_Name{end+1}=Gene_Name;
+%         end
         
         %Check if the gene exists in the structure
         if ~isfield(ts_value_5min,upper(Gene_Name))
