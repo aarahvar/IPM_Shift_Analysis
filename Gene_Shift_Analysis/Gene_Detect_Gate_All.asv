@@ -24,8 +24,8 @@ if ~exist('ts_value_5min')
     load('Yeat_Cyclebase_5min');
 end
 load('YGMD_2TF_T_Ranked.mat');
-load('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\Gene_Names.mat')
-
+%load('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\Gene_Names.mat')
+load('C:\Users\Amiri\Desktop\IPM\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\Gene_Names.mat')
 %Get the name of the databases
 Source_Name =fieldnames(ts_value_5min.YLR268W);
 
@@ -136,21 +136,21 @@ clc
 TF_b(1).TF_b = ts_Total.TF1_b;
 TF_b(2).TF_b = ts_Total.TF2_b;
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-s1 = 3;
-s2=2;
-TF_b(1).TF_b = randi([0 1],1,300);
-TF_b(2).TF_b = randi([0 1],1,300);
-Tbb (4:203)=~TF_b(1).TF_b(1:200) & TF_b(2).TF_b(3:202);
-
-Tbb = Tbb(4:203)+0;
-TF_b(1).TF_b = TF_b(1).TF_b(4:203);
-TF_b(2).TF_b = TF_b(2).TF_b(4:203);
-nanind = [10 50 80 120];
-TF_b(1).TF_b(nanind)=NaN;
-TF_b(2).TF_b(nanind)=NaN;
-Tbb(nanind)=NaN;
-ts_Total.T_b = Tbb;
+% %%%%%%%%%  SIMULATED DATA%%%%%%%%%%%%%%%%
+% s1 = 3;
+% s2=2;
+% TF_b(1).TF_b = randi([0 1],1,300);
+% TF_b(2).TF_b = randi([0 1],1,300);
+% Tbb (4:203)=~TF_b(1).TF_b(1:200) & TF_b(2).TF_b(3:202);
+% 
+% Tbb = Tbb(4:203)+0;
+% TF_b(1).TF_b = TF_b(1).TF_b(4:203);
+% TF_b(2).TF_b = TF_b(2).TF_b(4:203);
+% nanind = [10 50 80 120];
+% TF_b(1).TF_b(nanind)=NaN;
+% TF_b(2).TF_b(nanind)=NaN;
+% Tbb(nanind)=NaN;
+% ts_Total.T_b = Tbb;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Calculate the entopies and the detect the gates
