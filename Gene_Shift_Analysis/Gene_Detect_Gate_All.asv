@@ -24,8 +24,8 @@ if ~exist('ts_value_5min')
     load('Yeat_Cyclebase_5min');
 end
 load('YGMD_2TF_T_Ranked.mat');
-%load('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\Gene_Names.mat')
-load('C:\Users\Amiri\Desktop\IPM\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\Gene_Names.mat')
+load('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\Gene_Names.mat')
+%load('C:\Users\Amiri\Desktop\IPM\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\Gene_Names.mat')
 %Get the name of the databases
 Source_Name =fieldnames(ts_value_5min.YLR268W);
 

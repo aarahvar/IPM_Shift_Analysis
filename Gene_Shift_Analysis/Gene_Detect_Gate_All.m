@@ -72,7 +72,7 @@ ts_Total.TF2 = [];
 ts_Total.TF2_b = [];
 ts_Total.T = [];
 ts_Total.T_b = [];
-for i = 1:length(Source_Name)-2
+for i = 1:length(Source_Name)
     source_name = cell2mat(Source_Name(i));
    
     if ~(isfield(TF1,source_name) && isfield(TF2,source_name) && isfield(T,source_name))
@@ -192,7 +192,6 @@ else
 end
 
 Gate_str = [{'0       '},{'AND     '},{'RF1*~RF2'},{'RF1     '} ,{'~RF1*RF2'},{'RF2     '},{'XOR     '},{'OR      '},{'NOR     '},{'XNOR    '},{'~RF2    '},{'RF1+~RF2'},{'~RF1    '},{'~RF1+RF2'},{'NAND    '},{'1       '}];
-display(' ')
 for i=1:length(Sorted_Shift_Index)
     if i<30 || sum(Sorted_Shift_Index(i,:))==0
         str_neg = [];
@@ -213,7 +212,7 @@ for i=1:length(Sorted_Shift_Index)
 
         
         %display([num2str(Sorted_Shift_Index(i,:),2) '   ||   ' num2str( Detected_Output_Over_Shift(i,:),2)  '   ||   ' num2str(Sorted_Entropy(i),2) '    [' num2str(Remove_Index(i).index',2) ']'])
-        if i==5 || i==29
+        if i==5 
             display('_____________________________________________________________');
         end
     end
