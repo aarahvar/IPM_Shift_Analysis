@@ -24,6 +24,7 @@ plot_ts_flag = 1;
 windowSize = 2;
 Range_divider_thr = 20;
 
+Manually_Processed_Index(2)=0;
 for i = max(2,Manually_Processed_Index(1)):size(YGMD_2TF_T_Ranked,1)
     if Manually_Processed_Index(2)==3
         Manually_Processed_Index(2)=0;
@@ -34,6 +35,11 @@ for i = max(2,Manually_Processed_Index(1)):size(YGMD_2TF_T_Ranked,1)
         
         %Change the name to ORF style
         if length(Gene_Name)<7 || Gene_Name(1)~='Y'
+            if geneStd2Num(lower(Gene_Name))==-1
+                errordlg('No systenatic name in the list!')
+                Manually_Processed_Index = [i j];
+                continue
+            end
            Gene_Name =  upper(gene_names_sys(geneStd2Num(lower(Gene_Name))));
            Gene_Name = Gene_Name{1,1};
         end

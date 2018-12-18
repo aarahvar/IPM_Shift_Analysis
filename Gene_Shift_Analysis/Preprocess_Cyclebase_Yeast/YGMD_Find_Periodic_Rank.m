@@ -2,7 +2,7 @@ clear all
 [~, ~, TFcops(2).TF] = xlsread('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\YGMD_Unique_TF_Pairs_Ranked.xls','TF=2','H1:J774');
 load('periodic_rank.mat')
 load('Gene_Names.mat')
-TFcops(2).TF(289:end,:)=[];
+TFcops(2).TF(242:end,:)=[];
 page_num = 0;
 for n=2%:3
     Sum_periodic_Rank = zeros(size(TFcops(n).TF,1)-1,n);
@@ -32,8 +32,9 @@ for n=2%:3
     TFcops(n).TF_Periodic_rank(2:size(TFcops(n).TF,1),:) = Sum_periodic_Rank(index,:);
     
     page_num = page_num+1;
-    xlswrite('2TF_T_YGMD_Ranked',TFcops(n).TF_Name_ranked,page_num,'A1');
+    xlswrite('2TF_T_YGMD_Ranked2',TFcops(n).TF,page_num,'A1');
+    xlswrite('2TF_T_YGMD_Ranked2',sum(Sum_periodic_Rank,2),page_num,'D2');
     page_num = page_num+1;
-    xlswrite('2TF_T_YGMD_Ranked',TFcops(n).TF_Periodic_rank,page_num,'A1');
+    xlswrite('2TF_T_YGMD_Ranked2',TFcops(n).TF_Periodic_rank,page_num,'A1');
 end
 
