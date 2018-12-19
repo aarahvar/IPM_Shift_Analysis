@@ -25,7 +25,7 @@ windowSize = 2;
 Range_divider_thr = 20;
 
 Manually_Processed_Index(2)=0;
-for i = max(2,Manually_Processed_Index(1)):size(YGMD_2TF_T_Ranked,1)
+for i = 83:87;%max(2,Manually_Processed_Index(1)):size(YGMD_2TF_T_Ranked,1)
     if Manually_Processed_Index(2)==3
         Manually_Processed_Index(2)=0;
     end
