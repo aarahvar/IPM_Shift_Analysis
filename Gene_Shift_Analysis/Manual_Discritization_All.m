@@ -9,6 +9,7 @@ addpath(current_path(1:(index(end)-1)))
 % end
 
 load('YGMD_2TF_T_Ranked.mat');
+load('YGMD_2TF_T_Ranked_ORF.mat');
 load('Manually_Processed_Index.mat')
 load('Processed_Gene_Name.mat')
 load('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\Gene_Names.mat')
@@ -25,12 +26,12 @@ windowSize = 2;
 Range_divider_thr = 20;
 
 Manually_Processed_Index(2)=0;
-for i = 83:87;%max(2,Manually_Processed_Index(1)):size(YGMD_2TF_T_Ranked,1)
+for i = 123;%max(2,Manually_Processed_Index(1)):size(YGMD_2TF_T_Ranked,1)
     if Manually_Processed_Index(2)==3
         Manually_Processed_Index(2)=0;
     end
     for j = (Manually_Processed_Index(2)+1):3
-        Gene_Name = YGMD_2TF_T_Ranked{i,j};
+        Gene_Name = YGMD_2TF_T_Ranked_ORF{i,j};
         Gene_Name = Gene_Name{1,1};
         
         %Change the name to ORF style

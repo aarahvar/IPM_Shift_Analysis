@@ -1,5 +1,5 @@
 clear all
-[~, ~, TFcops(2).TF] = xlsread('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\YGMD_Unique_TF_Pairs_Ranked.xls','TF=2','H1:J774');
+[~, ~, TFcops(2).TF] = xlsread('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\YGMD_Unique_TF_Pairs_Ranked.xls','TF(ORF)=2','H1:J774');
 load('periodic_rank.mat')
 load('Gene_Names.mat')
 TFcops(2).TF(242:end,:)=[];

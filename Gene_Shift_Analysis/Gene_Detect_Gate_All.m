@@ -24,6 +24,7 @@ if ~exist('ts_value_5min')
     load('Yeat_Cyclebase_5min');
 end
 load('YGMD_2TF_T_Ranked.mat');
+load('YGMD_2TF_T_Ranked_ORF.mat');
 load('C:\Users\Amir\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\Gene_Names.mat')
 %load('C:\Users\Amiri\Desktop\IPM\MATLAB\Shift_Analysis\Gene_Shift_Analysis\Preprocess_Cyclebase_Yeast\Gene_Names.mat')
 %Get the name of the databases
@@ -33,24 +34,24 @@ Source_Name =fieldnames(ts_value_5min.YLR268W);
 
 %  Num_Row =4 ;
 
-TF1_name = cell2mat(YGMD_2TF_T_Ranked{Num_Row,1});
-TF2_name = cell2mat(YGMD_2TF_T_Ranked{Num_Row,2});
-T_name = cell2mat(YGMD_2TF_T_Ranked{Num_Row,3});
+TF1_name = cell2mat(YGMD_2TF_T_Ranked_ORF{Num_Row,1});
+TF2_name = cell2mat(YGMD_2TF_T_Ranked_ORF{Num_Row,2});
+T_name = cell2mat(YGMD_2TF_T_Ranked_ORF{Num_Row,3});
 
-%Change the name to ORF style
-if length(TF1_name)<7 || TF1_name(1)~='Y'
-    TF1_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,1}))));
-    TF1_name = TF1_name{1,1};
-end
-if length(TF2_name)<7 || TF2_name(1)~='Y'
-    TF2_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,2}))));
-    TF2_name = TF2_name{1,1};
-end
-if length(T_name)<7 || T_name(1)~='Y'
-    T_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,3}))));
-    T_name = T_name{1,1};
-end
-
+% %Change the name to ORF style
+% if length(TF1_name)<7 || TF1_name(1)~='Y'
+%     TF1_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,1}))));
+%     TF1_name = TF1_name{1,1};
+% end
+% if length(TF2_name)<7 || TF2_name(1)~='Y'
+%     TF2_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,2}))));
+%     TF2_name = TF2_name{1,1};
+% end
+% if length(T_name)<7 || T_name(1)~='Y'
+%     T_name =  upper(gene_names_sys(geneStd2Num(lower(YGMD_2TF_T_Ranked{Num_Row,3}))));
+%     T_name = T_name{1,1};
+% end
+% 
 
 plot_ts_flag = 1;
 windowSize = 2;
